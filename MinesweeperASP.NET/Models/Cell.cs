@@ -12,6 +12,7 @@ namespace MinesweeperASP.NET.Models
         public Boolean isLive { get; set; }
         public int colNumber { get; set; }
         public Boolean isVisited { get; set; }
+        public Boolean isFlagged { get; set; }
 
         public Cell(int RowNumber, int ColNumber)
         {
@@ -19,6 +20,7 @@ namespace MinesweeperASP.NET.Models
             colNumber = ColNumber;
             isVisited = false;
             isLive = false;
+            isFlagged = false;
             liveNeighbors = 0;
         }
 

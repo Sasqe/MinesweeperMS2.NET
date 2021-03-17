@@ -30,7 +30,13 @@ namespace MinesweeperASP.NET.Models
                     thisGame[i, j] = new Cell(i,j);
                 }
             }
-           
+            this.setupLiveNeighbors(2);
+            this.calculateLiveNeighbors();
+
+        }
+        public void reset(Board grid, int dif)
+        {
+            grid = new Board(dif);
         }
         public int IsGameOver(int row, int column)
         {
@@ -132,10 +138,7 @@ namespace MinesweeperASP.NET.Models
         public void floodFill(int row, int col)
         {
             //FOR EACH CHECK IN ALL 8 DIRECTIONS,
-            //this is how it goes
-            //each statement is in a try catch to keep it where I want it, if the starting position is in a valid position on the board, if the starting position's live neighbors are 0, and if the cell in the direction its checking 
-            //is not visited yet, it will visit that cell, and then repeat the process in said direction until it no longer can.
-            //I wrote these myself, through my own understanding of the flood fill algorithm in itself, however the algorithm was worked on by me in collaboration with Max and Kayla, as well as some other students.
+           
             try
             {
                 if (row < Size && thisGame[row, col].liveNeighbors == 0 && thisGame[row + 1, col].isVisited == false)
@@ -231,7 +234,7 @@ namespace MinesweeperASP.NET.Models
             catch (System.IndexOutOfRangeException)
             {
             }
-        }
-
+        
     }
+}
 }

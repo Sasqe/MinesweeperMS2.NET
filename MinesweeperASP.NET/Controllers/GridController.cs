@@ -10,7 +10,7 @@ namespace MinesweeperASP.NET.Controllers
 {
     public class GridController : Controller
     {
-        static Board board = new Board(5);
+        static Board board = new Board(10);
         static int gameOver;
         
         public GridController()
@@ -20,8 +20,8 @@ namespace MinesweeperASP.NET.Controllers
         public IActionResult Index()
         {
             //upon page load, create new grid and populate
-            board.setupLiveNeighbors(2);
-            board.calculateLiveNeighbors();
+
+           
             gameOver = 0;
             return View("Index", board);
         }
@@ -29,24 +29,30 @@ namespace MinesweeperASP.NET.Controllers
         public IActionResult HandleLeftClick(string cellNumber)
         {
             /// create new physics instance using our coordinates and board
-            Physics physics = new Physics(board, cellNumber);
-            physics.visit(board);
+            Physics physics = new Physics(cellNumber);
             ///game progress here
-            int finish = physics.checkpoint(board);
-            if (finish == 11)
+            if (physics.visit(board) == 11 && physics.visit(board) != -1)
             {
-                physics.reset(board);
-                finish = physics.checkpoint(board);
+                board = physics.reset(10);
+                
                 return View("loser");
 
             }
-            else if (finish == 12)
+            else if (physics.visit(board) == 12 && physics.visit(board) != -1)
             {
-                physics.reset(board);
-                finish = physics.checkpoint(board);
+                board = physics.reset(10);
+                
                 return View("winner");
             }
             return View("Index", board);
+        }
+        public IActionResult ShowOneButton(string cellNumber)
+        {
+            Physics physics = new Physics(cellNumber);
+            int row = physics.rowNumber;
+            int col = physics.colNumber;
+            //physics.flag(board);
+            return PartialView(board.thisGame[row,col]);
         }
     }
 /*=====================EOF==================================*/

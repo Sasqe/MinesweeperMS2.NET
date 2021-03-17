@@ -1,4 +1,26 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(function () {
+    console.log("Page is ready");
 
-// Write your JavaScript code.
+    $(".game-button").click(function (event) {
+       
+
+        var buttonNumber = $(this).val();
+        
+        console.log("button " + buttonNumber + "was clicked");
+        
+    })
+    function doButtonUpdate(buttonNumber) {
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/grid/ShowOneButton',
+            data: {
+                "cellNumber": buttonNumber
+            },
+            success: function (data) {
+                console.log(data);
+                $("#" + buttonNumber).html(data);
+            }
+        })
+    }
+})

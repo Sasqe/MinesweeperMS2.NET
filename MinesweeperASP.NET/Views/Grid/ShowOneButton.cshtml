@@ -1,0 +1,30 @@
+﻿@model MinesweeperASP.NET.Models.Cell
+@{
+    //store image names in an array for more efficient code.
+    string[] imageNames = { "grey.png", "green.png", "bomb.png", "flag.png" };
+    int i = 0;
+}
+ 
+@if (!Model.isVisited)
+{
+    i = 0;
+}
+@if (Model.isVisited && Model.isLive)
+{
+    i = 2;
+}
+@if (Model.isVisited && !Model.isLive)
+{
+    i = 1;
+}
+
+
+<button class="game-button" type="submit" value="@Model.rowNumber, @Model.colNumber" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
+    <img class="game-button-image" src="~/img/@imageNames[i]" />
+    <div class="button-label">
+        @Model.rowNumber
+        ,
+        @Model.colNumber
+    </div>
+</button>
+

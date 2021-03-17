@@ -1,9 +1,6 @@
 ﻿@model MinesweeperASP.NET.Models.Board
 @using MinesweeperASP.NET.Controllers;
-@{
-    GridController buttonController = new GridController();
-    
-}
+
 <style>
     .game-button {
         width: 85px;
@@ -31,8 +28,9 @@
 
 @{
     //store image names in an array for more efficient code.
-    string[] imageNames = { "grey.png", "green.png", "bomb.png", "flag.png" };
-}
+    string[] counterCells = { "EmptyCell.png", "1Cell.png", "2Cell.png", "3Cell.png", "4Cell.png", "5Cell.png", "6Cell.png", "7Cell.png", "8Cell.png" };
+    string[] imageNames = { "UnopenedCell.png", "BombCell.png", "FlaggedCell.png" };}
+<p>Current time: @DateTime.Now</p>
 <form>
     <div class="button-zone">
         @for (int i = 0; i < Model.Size; i++)
@@ -44,40 +42,46 @@
                 {
                     <div class="line-break"></div>
                 }
-                if (!Model.thisGame[i, j].isVisited)
-                {
+                <div class="oneButton" id="@i,@j">
                     <button class="game-button" type="submit" value="@i, @j" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
-                        <img class="game-button-image" src="~/img/@imageNames[0]" />
-                        <div class="button-label">
-                            @Model.thisGame[i, j].rowNumber
-                            ,
-                            @Model.thisGame[i, j].colNumber
-                        </div>
-                    </button>
-                }
+                        @if (Model.thisGame[i,j].isVisited && Model.thisGame[i, j].isLive == true)
+                        {
 
-                if (Model.thisGame[i, j].isVisited && Model.thisGame[i, j].isLive)
-                {
-                    <button class="game-button" type="submit" value="@i, @j" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
                         <img class="game-button-image" src="~/img/@imageNames[2]" />
                         <div class="button-label">
                             @Model.thisGame[i, j].rowNumber
                             ,
                             @Model.thisGame[i, j].colNumber
                         </div>
+
+                        }
+
+                        else if (Model.thisGame[i, j].isVisited == false)
+                        {
+                        
+                                <img class="game-button-image" src="~/img/@imageNames[0]" />
+                                <div class="button-label">
+                                    @Model.thisGame[i, j].rowNumber
+                                    ,
+                                    @Model.thisGame[i, j].colNumber
+                                </div>
+                           
+                        }
+                        else if (Model.thisGame[i, j].isVisited && Model.thisGame[i, j].isLive == false)
+                        {
+
+                       
+                                <img class="game-button-image" src="~/img/@counterCells[Model.thisGame[i,j].liveNeighbors]" />
+                                <div class="button-label">
+                                    @Model.thisGame[i, j].rowNumber
+                                    ,
+                                    @Model.thisGame[i, j].colNumber
+                                </div>
+                            
+                        }
                     </button>
-                }
-                else if (Model.thisGame[i, j].isVisited && !Model.thisGame[i, j].isLive)
-                {
-                    <button class="game-button" type="submit" value="@i, @j" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
-                        <img class="game-button-image" src="~/img/@imageNames[1]" />
-                        <div class="button-label">
-                            @Model.thisGame[i, j].rowNumber
-                            ,
-                            @Model.thisGame[i, j].colNumber
-                        </div>
-                    </button>
-                }
+                </div>
+
 
 
 

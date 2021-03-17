@@ -11,9 +11,9 @@ namespace MinesweeperASP.NET.Services
         public string[] data { get; set; }
         public int rowNumber { get; set; }
         public int colNumber { get; set; }
-        int breaker = 0;
+        
 //===============CONSTRUCTOR INITIALIZE ROW AND COL NUMBER============
-        public Physics(Board board, string cellnumber)
+        public Physics(string cellnumber)
         {
             data = cellnumber.Split(',');
             this.rowNumber = Convert.ToInt32(data[0]);
@@ -21,32 +21,51 @@ namespace MinesweeperASP.NET.Services
 
 
         }
+       
         //===============VISIT CURRENT INDEX=================
-        public void visit(Board grid)
+        public int visit(Board grid)
         {
-            grid.thisGame[this.rowNumber, this.colNumber].isVisited = true;
-            checkpoint(grid);
-        }
-//==================================RESET GRID========================
-        public void reset(Board grid)
-        {
-            foreach (Cell cell in grid.thisGame)
+            Cell cell = grid.thisGame[this.rowNumber, this.colNumber];
+            if (!cell.isFlagged)
             {
-                cell.isVisited = false;
-                cell.isLive = false;
+                cell.isVisited = true;
+                if (this.checkpoint(grid) == 10)
+                {
+                    return 10;
+                }
+                else if(this.checkpoint(grid) == 11)
+                {
+                    return 11;
+                }
+                else
+                {
+                    return 12;
+                }
+                
             }
+            return -1;
+        }
+    
+//==================================RESET GRID========================
+        public Board reset(int dif)
+        {
+            Board temp = new Board(dif);
+            
+
+            return temp;
         }
 //========================CHECKPOINT CONTINUE/END=====================
         public int checkpoint(Board grid)
         {
-              breaker = grid.IsGameOver(this.rowNumber, this.colNumber);
+            
+            int breaker = grid.IsGameOver(this.rowNumber, this.colNumber);
         
             if (breaker == 0)
             {
                 grid.floodFill(this.rowNumber, this.colNumber);
                 return 10;
             }
-            else if (breaker == -1)
+           else if (breaker == -1)
             {
                 foreach (Cell cell in grid.thisGame)
                 {
@@ -55,7 +74,7 @@ namespace MinesweeperASP.NET.Services
                 }
 
             }
-            else if (breaker == 1)
+          else if (breaker == 1)
             {
                 foreach (Cell cell in grid.thisGame)
                 {
@@ -63,7 +82,7 @@ namespace MinesweeperASP.NET.Services
                     return 12;
                 }
             }
-            grid.floodFill(this.rowNumber, this.colNumber);
+            
             return 10;
         }
     }
