@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MinesweeperASP.NET.Models;
 using MinesweeperASP.NET.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,32 +33,44 @@ namespace MinesweeperASP.NET.Controllers
         public IActionResult HandleLeftClick(string cellNumber)
         {
             /// create new physics instance using our coordinates and board
+            /// create current cell
             Physics physics = new Physics(cellNumber);
+            Cell cell = board.thisGame[physics.rowNumber, physics.colNumber];
             ///game progress here
-            if (physics.visit(board) == 11 && physics.visit(board) != -1)
+            if (cell.isVisited == false)
             {
-                board = physics.reset(10);
-                
-                return View("loser");
+                if (physics.visit(board) == 11 && physics.visit(board) != -1)
+                {
+                    board = physics.reset(10);
 
-            }
-            else if (physics.visit(board) == 12 && physics.visit(board) != -1)
-            {
-                board = physics.reset(10);
-                
-                return View("winner");
+                    return View("loser");
+
+                }
+                else if (physics.visit(board) == 12 && physics.visit(board) != -1)
+                {
+                    board = physics.reset(10);
+
+                    return View("winner");
+                }
             }
             return View("Index", board);
         }
-        public IActionResult ShowOneButton(string cellNumber)
+        public IActionResult flag(string cellNumber)
         {
             Physics physics = new Physics(cellNumber);
+           
             int row = physics.rowNumber;
             int col = physics.colNumber;
-            //physics.flag(board);
-            return PartialView(board.thisGame[row,col]);
+         
+            physics.flag(board);
+            /* return Json(new { part1 = buttonHTMLString });
+             */
+            return PartialView(board.thisGame[row, col]);
         }
+   
     }
+    
+
 /*=====================EOF==================================*/
 }
 

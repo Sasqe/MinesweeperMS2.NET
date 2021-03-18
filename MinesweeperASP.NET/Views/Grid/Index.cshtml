@@ -41,44 +41,61 @@
                 if (j % Model.Size == 0)
                 {
                     <div class="line-break"></div>
-                }
-                <div class="oneButton" id="@i,@j">
-                    <button class="game-button" type="submit" value="@i, @j" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
-                        @if (Model.thisGame[i,j].isVisited && Model.thisGame[i, j].isLive == true)
+                    }
+
+                <div class="oneButton" id="@i-@j">
+                    <button class="game-button" type="submit" value="@i-@j" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
+                        @if (Model.thisGame[i, j].isVisited && Model.thisGame[i, j].isLive == true)
                         {
 
-                        <img class="game-button-image" src="~/img/@imageNames[2]" />
-                        <div class="button-label">
-                            @Model.thisGame[i, j].rowNumber
-                            ,
-                            @Model.thisGame[i, j].colNumber
-                        </div>
+                            <img class="game-button-image" src="~/img/@imageNames[1]" />
+                            <div class="button-label">
+                                @Model.thisGame[i, j].rowNumber
+                                ,
+                                @Model.thisGame[i, j].colNumber
+                            </div>
+
+                        }
+                        else if (Model.thisGame[i, j].isFlagged == true)
+                        {
+
+
+                            <img class="game-button-image" src="~/img/@imageNames[2]" />
+                            <div class="button-label">
+                                @Model.thisGame[i, j].rowNumber
+                                ,
+                                @Model.thisGame[i, j].colNumber
+                            </div>
 
                         }
 
                         else if (Model.thisGame[i, j].isVisited == false)
                         {
-                        
-                                <img class="game-button-image" src="~/img/@imageNames[0]" />
-                                <div class="button-label">
-                                    @Model.thisGame[i, j].rowNumber
-                                    ,
-                                    @Model.thisGame[i, j].colNumber
-                                </div>
-                           
+
+                            <img class="game-button-image" src="~/img/@imageNames[0]" />
+                            <div class="button-label">
+                                @Model.thisGame[i, j].rowNumber
+                                ,
+                                @Model.thisGame[i, j].colNumber
+                            </div>
+
                         }
                         else if (Model.thisGame[i, j].isVisited && Model.thisGame[i, j].isLive == false)
                         {
 
-                       
-                                <img class="game-button-image" src="~/img/@counterCells[Model.thisGame[i,j].liveNeighbors]" />
-                                <div class="button-label">
-                                    @Model.thisGame[i, j].rowNumber
-                                    ,
-                                    @Model.thisGame[i, j].colNumber
-                                </div>
-                            
+
+                            <img class="game-button-image" src="~/img/@counterCells[Model.thisGame[i,j].liveNeighbors]" />
+                            <div class="button-label">
+                                @Model.thisGame[i, j].rowNumber
+                                ,
+                                @Model.thisGame[i, j].colNumber
+                            </div>
+
                         }
+
+
+
+
                     </button>
                 </div>
 

@@ -15,13 +15,22 @@ namespace MinesweeperASP.NET.Services
 //===============CONSTRUCTOR INITIALIZE ROW AND COL NUMBER============
         public Physics(string cellnumber)
         {
-            data = cellnumber.Split(',');
+            this.data = cellnumber.Split('-');
             this.rowNumber = Convert.ToInt32(data[0]);
             this.colNumber = Convert.ToInt32(data[1]);
 
 
         }
-       
+        //flag
+        public void flag(Board grid)
+        {
+            Cell cell = grid.thisGame[this.rowNumber, this.colNumber];
+            if (!cell.isFlagged)
+                cell.isFlagged = true;
+            else if (cell.isFlagged)
+                cell.isFlagged = false;
+        }
+
         //===============VISIT CURRENT INDEX=================
         public int visit(Board grid)
         {
