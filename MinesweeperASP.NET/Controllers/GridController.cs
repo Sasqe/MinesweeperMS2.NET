@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MinesweeperASP.NET.Models;
 using MinesweeperASP.NET.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,8 +15,10 @@ namespace MinesweeperASP.NET.Controllers
 {
     public class GridController : Controller
     {
-        static Board board = new Board(10);
+        
+        static public Board board = new Board(10);
         static int gameOver;
+        DataService ds = new DataService();
         
         public GridController()
         {
@@ -67,7 +70,39 @@ namespace MinesweeperASP.NET.Controllers
              */
             return PartialView(board.thisGame[row, col]);
         }
-   
+
+        public IActionResult Save()
+        {
+           
+            gridDTO dto = new gridDTO(1, JsonConvert.SerializeObject(board), DateTime.Now, 1);
+
+            bool success = ds.Save(dto);
+            return View("Index", board);
+        }
+        public IActionResult LoadDelete(int id, string action)
+        {
+            List<gridDTO> games = ds.retrieveData();
+            //select board from database and return grid view
+            if (action == "Load")
+            {
+                gridDTO dto = ds.Load();
+                board = JsonConvert.DeserializeObject<Board>(dto.JSONString);
+
+                return View("Index", board);
+            }
+            // select board from database to delete and return gridlist view
+            else if (action == "Delete")
+            {
+                /* bool success = ds.delete(id);*/
+               // ds.delete(id);
+                games = ds.retrieveData();
+                return View("Games", games);
+            }
+            return View("Games", games);
+
+
+        }
+
     }
     
 

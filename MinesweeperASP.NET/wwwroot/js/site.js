@@ -44,4 +44,5 @@
                 $("#" + buttonNumber).html(data);
             }
         })
-    }
+}
+

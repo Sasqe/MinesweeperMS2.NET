@@ -13,12 +13,14 @@ namespace MinesweeperASP.NET.Models
         public int tick = 1;
         public int fieldDifficulty { get; set; }
         public int Size { get; set; }
+      
         //Creating the array
         public Cell[,] thisGame;
 
         //creating minefield
         public Board(int size)
         {
+            
             Size = size;
             //provides player ability to choose grid size
             thisGame = new Cell[size, size];
@@ -34,6 +36,7 @@ namespace MinesweeperASP.NET.Models
             this.calculateLiveNeighbors();
 
         }
+       
         public void reset(Board grid, int dif)
         {
             grid = new Board(dif);

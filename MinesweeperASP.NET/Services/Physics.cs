@@ -8,6 +8,7 @@ namespace MinesweeperASP.NET.Services
 {
     public class Physics
     {
+        DataDAO dao = new DataDAO();
         public string[] data { get; set; }
         public int rowNumber { get; set; }
         public int colNumber { get; set; }
@@ -15,15 +16,30 @@ namespace MinesweeperASP.NET.Services
 //===============CONSTRUCTOR INITIALIZE ROW AND COL NUMBER============
         public Physics(string cellnumber)
         {
-            this.data = cellnumber.Split('-');
-            this.rowNumber = Convert.ToInt32(data[0]);
-            this.colNumber = Convert.ToInt32(data[1]);
-
+            if (cellnumber != null)
+            {
+                try
+                {
+                    this.data = cellnumber.Split('-');
+                    this.rowNumber = Convert.ToInt32(data[0]);
+                    this.colNumber = Convert.ToInt32(data[1]);
+                }
+                catch (NullReferenceException e)
+                {
+                    Console.WriteLine("Continuing...");
+                    Console.WriteLine(e.StackTrace);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Continuing...");
+            }
 
         }
         //flag
         public void flag(Board grid)
         {
+
             Cell cell = grid.thisGame[this.rowNumber, this.colNumber];
             if (!cell.isFlagged)
                 cell.isFlagged = true;

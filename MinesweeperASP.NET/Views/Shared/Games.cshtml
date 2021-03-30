@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MinesweeperASP.NET.Models.gridDTO>
+
+<section>
+
+    @using (Html.BeginForm("LoadDelete", "Grid"))
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.date)
+                    </th>
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+                        <td>
+                            <input type="hidden" name="id" value="@item.ID" />
+                        </td>
+                        <td>
+
+
+
+                            <input name="action" type="submit" value="Load" />
+                            <input name="action" type="submit" value="Delete" />
+
+
+
+
+                        </td>
+                       
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>

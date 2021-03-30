@@ -1,5 +1,4 @@
 ﻿@model MinesweeperASP.NET.Models.Board
-@using MinesweeperASP.NET.Controllers;
 
 <style>
     .game-button {
@@ -30,7 +29,7 @@
     //store image names in an array for more efficient code.
     string[] counterCells = { "EmptyCell.png", "1Cell.png", "2Cell.png", "3Cell.png", "4Cell.png", "5Cell.png", "6Cell.png", "7Cell.png", "8Cell.png" };
     string[] imageNames = { "UnopenedCell.png", "BombCell.png", "FlaggedCell.png" };}
-<p>Current time: @DateTime.Now</p>
+<p value="@DateTime.Now" id="@DateTime.Now">Current time: @DateTime.Now</p>
 <form>
     <div class="button-zone">
         @for (int i = 0; i < Model.Size; i++)
@@ -114,5 +113,6 @@
 </form>
 <div>
     <a asp-controller="Home" asp-action="Index">Back To Home</a>
+    <a id="date" value="@DateTime.Now" asp-controller="Grid" asp-action="Save">Save Game</a>
 </div>
 
