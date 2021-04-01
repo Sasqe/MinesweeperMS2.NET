@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MinesweeperASP.NET.Models;
 using MinesweeperASP.NET.Services;
 using System;
@@ -13,22 +14,33 @@ namespace MinesweeperASP.NET.Controllers
         SecurityService securityService = new SecurityService();
         public IActionResult Index()
         {
-            return View();
+            return View("Login");
         }
 
         //Two Parameters --> Success page & user data from login form
         public IActionResult ProcessLogin(userModel user)
         {
             
-            if (securityService.IsLoginValid(user))
+            if (securityService.IsLoginValid(user) != null)
             {
+                userModel m = securityService.IsLoginValid(user);
+                HttpContext.Session.SetInt32("userID", m.ID);
+                var red =(int)HttpContext.Session.GetInt32("userID");
                 return View("LoginSuccess", user);  
             }
             else
             {
-                return View("LoginFailure", user);  
+                return View("Login");  
             }                       
         }
-
+        public IActionResult home()
+        {
+            return View("LoginSuccess");
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Login");
+        }
     }
 }

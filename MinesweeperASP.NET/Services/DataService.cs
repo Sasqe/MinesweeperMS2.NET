@@ -10,6 +10,12 @@ namespace MinesweeperASP.NET.Services
     {
         DataDAO dao = new DataDAO();
 
+        public List<gridDTO> retrieveData(int id)
+        {
+            // return true if found in the list
+            return dao.retrieveData(id);
+        }
+        //api 
         public List<gridDTO> retrieveData()
         {
             // return true if found in the list
@@ -21,16 +27,18 @@ namespace MinesweeperASP.NET.Services
 
             return dao.save(dto);
         }
-        public gridDTO Load()
+        public gridDTO Load(int id)
         {
             //serialize board and save to database
 
-            return dao.load();
+            return dao.load(id);
         }
-        /*public bool AddAccountToDatabase(userModel user)
+        public int Delete(int id)
         {
-            // If true send user details to the database
-            return usersDAO.AddAccountToDatabase(user);
-        }*/
+            //serialize board and save to database
+
+            return dao.delete(id);
+        }
+      
     }
 }

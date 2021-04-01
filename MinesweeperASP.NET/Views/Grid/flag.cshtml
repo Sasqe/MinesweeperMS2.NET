@@ -19,10 +19,6 @@ else if (!Model.isVisited && !Model.isFlagged)
 
 <button class="game-button" type="submit" value="@Model.rowNumber-@Model.colNumber" name="cellNumber" asp-controller="Grid" asp-action="HandleLeftClick">
     <img class="game-button-image" src="~/img/@imageNames[i]" />
-    <div class="button-label">
-        @Model.rowNumber
-        ,
-        @Model.colNumber
-    </div>
+  
 </button>
 

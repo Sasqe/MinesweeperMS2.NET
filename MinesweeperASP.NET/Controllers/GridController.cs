@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -28,7 +29,7 @@ namespace MinesweeperASP.NET.Controllers
         {
             //upon page load, create new grid and populate
 
-           
+            board = new Board(10);
             gameOver = 0;
             return View("Index", board);
         }
@@ -44,16 +45,16 @@ namespace MinesweeperASP.NET.Controllers
             {
                 if (physics.visit(board) == 11 && physics.visit(board) != -1)
                 {
-                    board = physics.reset(10);
+                   
 
-                    return View("loser");
+                    return View("loser", board);
 
                 }
                 else if (physics.visit(board) == 12 && physics.visit(board) != -1)
                 {
-                    board = physics.reset(10);
+                   
 
-                    return View("winner");
+                    return View("winner", board);
                 }
             }
             return View("Index", board);
@@ -73,36 +74,38 @@ namespace MinesweeperASP.NET.Controllers
 
         public IActionResult Save()
         {
-           
-            gridDTO dto = new gridDTO(1, JsonConvert.SerializeObject(board), DateTime.Now, 1);
+            int userID = (int)HttpContext.Session.GetInt32("userID");
+            gridDTO dto = new gridDTO(1, JsonConvert.SerializeObject(board), DateTime.Now, userID);
 
             bool success = ds.Save(dto);
             return View("Index", board);
         }
-        public IActionResult LoadDelete(int id, string action)
+        [HttpPost]
+        public IActionResult Load(int load)
         {
-            List<gridDTO> games = ds.retrieveData();
             //select board from database and return grid view
-            if (action == "Load")
-            {
-                gridDTO dto = ds.Load();
-                board = JsonConvert.DeserializeObject<Board>(dto.JSONString);
+            gridDTO dto = ds.Load(load);
+            board = JsonConvert.DeserializeObject<Board>(dto.JSONString);
 
-                return View("Index", board);
-            }
-            // select board from database to delete and return gridlist view
-            else if (action == "Delete")
-            {
-                /* bool success = ds.delete(id);*/
-               // ds.delete(id);
-                games = ds.retrieveData();
-                return View("Games", games);
-            }
+            return View("Index", board);
+
+           
+
+        }
+        [HttpPost]
+        public IActionResult Delete(int delete)
+        {
+            int userID = (int)HttpContext.Session.GetInt32("userID");
+            //select board from database and return grid view
+            int deleted = ds.Delete(delete);
+
+
+            List<gridDTO> games = ds.retrieveData(userID);
             return View("Games", games);
 
 
-        }
 
+        }
     }
     
 

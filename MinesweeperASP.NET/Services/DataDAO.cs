@@ -66,16 +66,18 @@ namespace MinesweeperASP.NET.Services
             
         }
 
-        public List<gridDTO> retrieveData()
+        public List<gridDTO> retrieveData(int id)
         {
             int counter = 2;
             List<gridDTO> list = new List<gridDTO>();
             bool success = false;
 
-            string sqlStatement = "SELECT * FROM dbo.Games";
+            string sqlStatement = "SELECT * FROM dbo.Games WHERE userID = @id";
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
                 try
                 {
                     
@@ -105,17 +107,59 @@ namespace MinesweeperASP.NET.Services
                 return list;
             }
         }
-        public gridDTO load()
+        public List<gridDTO> retrieveData()
+        {
+            int counter = 2;
+            List<gridDTO> list = new List<gridDTO>();
+            bool success = false;
+
+            string sqlStatement = "SELECT * FROM dbo.Games";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                
+                try
+                {
+
+                    connection.Open();
+                    SqlDataReader sqlDataReader = command.ExecuteReader();
+
+
+
+                    while (sqlDataReader.Read())
+                    {
+                        list.Add(new gridDTO
+                        {
+                            ID = (int)sqlDataReader[0],
+                            JSONString = (string)sqlDataReader[1],
+                            date = (DateTime)Convert.ToDateTime(sqlDataReader[2]),
+                            userID = (int)sqlDataReader[3]
+                        });
+
+                    }
+                    connection.Close();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    connection.Close();
+                }
+                return list;
+            }
+        }
+        public gridDTO load(int id)
         {
             int counter = 2;
 
             bool success = false;
             gridDTO dto = new gridDTO();
-            string sqlStatement = "SELECT TOP 1 * FROM dbo.Games ORDER BY ID DESC";
+            string sqlStatement = "SELECT * FROM dbo.Games WHERE ID = @id";
             
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
                 try
                 {
                     connection.Open();
@@ -138,6 +182,33 @@ namespace MinesweeperASP.NET.Services
 
 
         }
+        public int delete (int id)
+        {
+            int success = -1;
 
+           
+            gridDTO dto = new gridDTO();
+            string sqlStatement = "DELETE FROM dbo.Games WHERE ID = @id";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                try
+                {
+                    connection.Open();
+                    success = Convert.ToInt32(command.ExecuteScalar());
+                    connection.Close();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    connection.Close();
+                }
+                return success;
+            }
+
+
+        }
     }
 }

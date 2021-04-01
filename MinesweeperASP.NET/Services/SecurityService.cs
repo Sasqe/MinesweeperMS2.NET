@@ -10,7 +10,7 @@ namespace MinesweeperASP.NET.Services
     {
         UsersDAO usersDAO = new UsersDAO();
 
-        public bool IsLoginValid(userModel user)
+        public userModel IsLoginValid(userModel user)
         {
             // return true if found in the list
             return usersDAO.FindUserByNameAndPassword(user);

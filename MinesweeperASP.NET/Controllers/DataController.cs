@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -24,7 +25,9 @@ namespace MinesweeperASP.NET.Controllers
         }
         public IActionResult Index()
         {
-            List<gridDTO> games = ds.retrieveData();
+            int userID = (int)HttpContext.Session.GetInt32("userID");
+
+            List<gridDTO> games = ds.retrieveData(userID);
           return View("Games", games);
         }
    

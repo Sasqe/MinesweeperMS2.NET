@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MinesweeperASP.NET.Models;
 using MinesweeperASP.NET.Services;
@@ -24,6 +25,7 @@ namespace ASPCoreFirstApp.Controllers
         [ResponseType(typeof(List<gridDTO>))]
         public IEnumerable<gridDTO> Index()
         {
+            
             List<gridDTO> list = repository.retrieveData();
             //translate structure into DTO
             //= foreach ProductModel p in list,
@@ -31,15 +33,29 @@ namespace ASPCoreFirstApp.Controllers
             IEnumerable<gridDTO> dtolist = from d in list select new gridDTO(d.ID, d.JSONString, d.date, d.userID);
             return dtolist;
         }
+
         [HttpGet("getone/{Id}")]
         [ProducesDefaultResponseType(typeof(gridDTO))]
         public ActionResult<gridDTO> getOne(int Id)
         {
-            gridDTO grid = repository.load();
+            gridDTO grid = repository.load(Id);
             //create new DTO using product data
             gridDTO griddto = new gridDTO(grid.ID, grid.JSONString, grid.date, grid.userID);
             //return DTO instead of product.
             return griddto;
+        }
+        [HttpGet("delete/{Id}")]
+        [ResponseType(typeof(List<gridDTO>))]
+        public IEnumerable<gridDTO> delete(int Id)
+        {
+            repository.delete(Id);
+            //create new DTO using product data
+            List<gridDTO> list = repository.retrieveData();
+            //translate structure into DTO
+            //= foreach ProductModel p in list,
+            //push to list new product DTO w data
+            IEnumerable<gridDTO> dtolist = from d in list select new gridDTO(d.ID, d.JSONString, d.date, d.userID);
+            return dtolist;
         }
 
     }

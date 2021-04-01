@@ -2,9 +2,13 @@
 
 <style>
     .game-button {
-        width: 85px;
-    }
+        background-color: #C0C0C0;
 
+    }
+    body {
+        background-image: url('/img/fog.jpg');
+        background-size:cover;
+    }
     .game-button-image {
         width: 70px;
     }
@@ -30,7 +34,9 @@
     string[] counterCells = { "EmptyCell.png", "1Cell.png", "2Cell.png", "3Cell.png", "4Cell.png", "5Cell.png", "6Cell.png", "7Cell.png", "8Cell.png" };
     string[] imageNames = { "UnopenedCell.png", "BombCell.png", "FlaggedCell.png" };}
 <p value="@DateTime.Now" id="@DateTime.Now">Current time: @DateTime.Now</p>
+<body>
 <form>
+
     <div class="button-zone">
         @for (int i = 0; i < Model.Size; i++)
         {
@@ -48,11 +54,7 @@
                         {
 
                             <img class="game-button-image" src="~/img/@imageNames[1]" />
-                            <div class="button-label">
-                                @Model.thisGame[i, j].rowNumber
-                                ,
-                                @Model.thisGame[i, j].colNumber
-                            </div>
+                       
 
                         }
                         else if (Model.thisGame[i, j].isFlagged == true)
@@ -60,11 +62,7 @@
 
 
                             <img class="game-button-image" src="~/img/@imageNames[2]" />
-                            <div class="button-label">
-                                @Model.thisGame[i, j].rowNumber
-                                ,
-                                @Model.thisGame[i, j].colNumber
-                            </div>
+                           
 
                         }
 
@@ -72,11 +70,7 @@
                         {
 
                             <img class="game-button-image" src="~/img/@imageNames[0]" />
-                            <div class="button-label">
-                                @Model.thisGame[i, j].rowNumber
-                                ,
-                                @Model.thisGame[i, j].colNumber
-                            </div>
+                       
 
                         }
                         else if (Model.thisGame[i, j].isVisited && Model.thisGame[i, j].isLive == false)
@@ -84,11 +78,7 @@
 
 
                             <img class="game-button-image" src="~/img/@counterCells[Model.thisGame[i,j].liveNeighbors]" />
-                            <div class="button-label">
-                                @Model.thisGame[i, j].rowNumber
-                                ,
-                                @Model.thisGame[i, j].colNumber
-                            </div>
+              
 
                         }
 
@@ -111,8 +101,9 @@
     </div>
 
 </form>
+    </body>
 <div>
-    <a asp-controller="Home" asp-action="Index">Back To Home</a>
-    <a id="date" value="@DateTime.Now" asp-controller="Grid" asp-action="Save">Save Game</a>
+    <button><a asp-controller="Login" asp-action="home">Back To Home</a></button>
+   <button><a id="date" value="@DateTime.Now" asp-controller="Grid" asp-action="Save">Save Game</a></button>
 </div>
 

@@ -24,11 +24,11 @@ namespace MinesweeperASP.NET.Controllers
             if (success == true)       //if (user.UserName != null && user.Password != null)
             {
 
-                return View("RegisterSuccess", user);
+                return View("Login");
             }
             else
             {
-                return View("RegisterFailure", user);
+                return View("Register", user);
             }
         }
     }

@@ -23,25 +23,7 @@ namespace MinesweeperASP.NET.Models
         [DisplayName("Last Name")]
         public string LastName { get; set; }
 
-        [Required]        
-        [StringLength(10, MinimumLength = 4)]
-        [DisplayName("Gender")]
-        // Genders: Male, Female, & Other
-        public string Gender { get; set; }
-
-        [Required]
-        [DisplayName("Age")]
-        public int Age { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [DisplayName("State")]
-        public string State { get; set; }
-
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        [DisplayName("Email")]
-        public string EmailAddress { get; set; }
+     
 
         [Required]
         [StringLength(25, MinimumLength = 3)]

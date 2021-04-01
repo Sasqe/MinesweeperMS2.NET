@@ -1,68 +1,95 @@
 ﻿@model MinesweeperASP.NET.Models.userModel
+<!DOCTYPE html>
+<html lang="en">
 
-<h4>Registration</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ProcessRegister">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <!--<div class="form-group">
-                <label asp-for="ID" class="control-label"></label>
-                <input asp-for="ID" class="form-control" />
-                <span asp-validation-for="ID" class="text-danger"></span>
+<head>
+    <style>
+
+        body {
+            background-image: url('/img/fog.jpg');
+            background-size: cover;
+        }
+    </style>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link href="/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/css/register.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w780">
+            <div class="card card-3">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h2 class="title">Registration Info</h2>
+                    <form asp-action="ProcessRegister">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!--<div class="form-group">
+                            <label asp-for="ID" class="control-label"></label>
+                            <input asp-for="ID" class="form-control" />
+                            <span asp-validation-for="ID" class="text-danger"></span>
+                        </div>
+                        -->
+                        <div class="input-group">
+                            <input class="input--style-3" asp-for="FirstName" type="text" placeholder="First Name...">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" asp-for="LastName" type="text" placeholder="Last Name...">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" asp-for="UserName" type="text" placeholder="Username...">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" asp-for="Password" type="text" placeholder="Password...">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="p-t-10">
+                            <button class="btn btn--pill btn--green" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            -->
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" />
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmailAddress" class="control-label"></label>
-                <input asp-for="EmailAddress" class="form-control" />
-                <span asp-validation-for="EmailAddress" class="text-danger"></span>
-            </div>            
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-controller="Home" asp-action="Index">Back to Home</a>
-</div>
+    <!-- Jquery JS-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="/vendor/select2/select2.min.js"></script>
+    <script src="/vendor/datepicker/moment.min.js"></script>
+    <script src="/vendor/datepicker/daterangepicker.js"></script>
 
+    <!-- Main JS-->
+    <script src="~/lib/bootstrap/dist/js/global.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
